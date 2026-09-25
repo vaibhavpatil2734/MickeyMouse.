@@ -1,0 +1,193 @@
+.home-page {
+    min-height: 100vh;
+
+    background: var(--color-page-background);
+
+    color: var(--color-text-primary);
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.home-content {
+    width: 100%;
+    max-width: var(--content-max-width);
+
+    margin: 0 auto;
+
+    padding: var(--spacing-xl);
+}
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.home-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: var(--spacing-lg);
+
+    padding-top: var(--spacing-xl);
+
+    margin-bottom: var(--spacing-xl);
+}
+
+.home-label {
+    display: block;
+
+    margin-bottom: var(--spacing-sm);
+
+    font-size: 11px;
+    font-weight: 750;
+
+    letter-spacing: 1px;
+
+    color: var(--color-primary);
+}
+
+.home-heading h1 {
+    margin: 0 0 var(--spacing-sm);
+
+    font-size: 30px;
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    color: var(--color-text-primary);
+}
+
+.home-heading p {
+    margin: 0;
+
+    font-size: 14px;
+
+    color: var(--color-text-secondary);
+}
+
+/* =========================================================
+   DEVICE COUNT
+   ========================================================= */
+
+.device-count {
+    display: flex;
+    align-items: center;
+
+    gap: var(--spacing-sm);
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+}
+
+.device-count-number {
+    font-size: 18px;
+
+    font-weight: 750;
+
+    color: var(--color-primary);
+}
+
+.device-count-label {
+    font-size: 12px;
+
+    color: var(--color-text-secondary);
+}
+
+/* =========================================================
+   DEVICES
+   ========================================================= */
+
+.managed-devices-section {
+    width: 100%;
+}
+
+.managed-devices-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--spacing-md);
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.no-devices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 70px 30px;
+
+    border: 1px dashed var(--color-border);
+
+    border-radius: var(--radius-xl);
+
+    background: var(--color-surface);
+
+    text-align: center;
+}
+
+.no-devices-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: var(--spacing-md);
+
+    border-radius: 50%;
+
+    background: var(--color-primary-soft);
+
+    color: var(--color-primary);
+
+    font-size: 24px;
+}
+
+.no-devices h2 {
+    margin: 0 0 var(--spacing-sm);
+
+    font-size: 18px;
+}
+
+.no-devices p {
+    margin: 0;
+
+    max-width: 450px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: var(--color-text-secondary);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .home-content {
+        padding: var(--spacing-lg);
+    }
+
+    .home-heading {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding-top: var(--spacing-lg);
+    }
+
+    .home-heading h1 {
+        font-size: 26px;
+    }
+}

@@ -1,0 +1,487 @@
+.device-details-page {
+    min-height: calc(100vh - var(--navbar-height));
+    background: var(--color-page-background);
+    color: var(--color-text-primary);
+    box-sizing: border-box;
+}
+
+.device-details-content {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.device-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
+
+    padding-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.device-header-left {
+    display: flex;
+    align-items: center;
+
+    gap: var(--spacing-md);
+
+    min-width: 0;
+}
+
+.device-page-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1px;
+
+    color: var(--color-primary);
+}
+
+.device-page-header h1 {
+    margin: 0 0 3px;
+
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.device-page-header p {
+    margin: 0;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+
+    color: var(--color-text-secondary);
+}
+
+
+/* =========================================================
+   HEADER RIGHT SIDE
+   ========================================================= */
+
+.device-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: var(--spacing-md);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MANAGED DEVICES BUTTON
+   ========================================================= */
+
+.device-managed-devices-button {
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    background: var(--color-surface);
+    color: var(--color-text-secondary);
+
+    font-size: 11px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.device-managed-devices-button:hover {
+    background: var(--color-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   DEVICE STATUS
+   ========================================================= */
+
+.device-status {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    border-radius: var(--radius-md);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: capitalize;
+
+    flex-shrink: 0;
+}
+
+.device-status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.device-status-online {
+    background: var(--color-success-background);
+    color: var(--color-success);
+}
+
+.device-status-offline {
+    background: var(--color-neutral-background);
+    color: var(--color-text-secondary);
+}
+
+.device-status-warning {
+    background: var(--color-warning-background);
+    color: var(--color-warning);
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.device-information-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: var(--spacing-md);
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+   ========================================================= */
+
+.device-info-card {
+    padding: var(--spacing-md);
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-device-card);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.device-info-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: var(--spacing-sm);
+
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.device-info-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+}
+
+.device-info-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.device-info-card-header h2 {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.device-info-card-header p {
+    margin: 2px 0 0;
+
+    font-size: 10px;
+
+    color: var(--color-text-secondary);
+}
+
+
+/* =========================================================
+   INFORMATION ROW
+   ========================================================= */
+
+.device-info-row {
+    min-height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--spacing-md);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.device-info-row:last-child {
+    border-bottom: 0;
+}
+
+.device-info-row span {
+    font-size: 11px;
+
+    color: var(--color-text-secondary);
+}
+
+.device-info-row strong {
+    font-size: 11px;
+    font-weight: 650;
+
+    text-align: right;
+
+    color: var(--color-text-primary);
+}
+
+
+/* =========================================================
+   MONOSPACE
+   ========================================================= */
+
+.monospace {
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    letter-spacing: 0.15px;
+}
+
+
+/* =========================================================
+   INLINE STATUS
+   ========================================================= */
+
+.inline-status {
+    text-transform: capitalize;
+}
+
+.inline-status-online {
+    color: var(--color-success);
+}
+
+.inline-status-offline {
+    color: var(--color-text-secondary);
+}
+
+.inline-status-warning {
+    color: var(--color-warning);
+}
+
+
+/* =========================================================
+   DEVICE NOT FOUND
+   ========================================================= */
+
+.device-not-found {
+    min-height: calc(100vh - var(--navbar-height));
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--spacing-lg);
+
+    background: var(--color-page-background);
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+.device-not-found h2 {
+    margin: 0 0 var(--spacing-sm);
+}
+
+.device-not-found p {
+    margin: 0 0 var(--spacing-md);
+
+    color: var(--color-text-secondary);
+}
+
+.device-not-found button {
+    height: 40px;
+
+    padding: 0 var(--spacing-lg);
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .device-details-content {
+        padding: var(--spacing-md);
+    }
+
+    .device-page-header {
+        padding-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .device-information-grid {
+        gap: var(--spacing-sm);
+    }
+
+    .device-info-card {
+        padding: var(--spacing-sm);
+    }
+
+    .device-info-row {
+        min-height: 34px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .device-information-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .device-page-header {
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .device-details-content {
+        padding: var(--spacing-sm);
+    }
+
+    .device-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: var(--spacing-sm);
+
+        padding-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .device-header-actions {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+    .device-page-header h1 {
+        font-size: 21px;
+    }
+
+    .device-page-header p {
+        font-size: 10px;
+    }
+
+    .device-info-card {
+        padding: var(--spacing-sm);
+    }
+
+    .device-info-card-header {
+        padding-bottom: 8px;
+        margin-bottom: 6px;
+    }
+
+    .device-info-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .device-info-row {
+        min-height: 34px;
+
+        gap: 10px;
+    }
+
+    .device-info-row span,
+    .device-info-row strong {
+        font-size: 10px;
+    }
+
+    .device-managed-devices-button {
+        height: 36px;
+
+        padding: 0 11px;
+
+        font-size: 10px;
+    }
+}
